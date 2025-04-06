@@ -1,4 +1,4 @@
-package com.hust.datn.response;
+package com.hust.datn.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

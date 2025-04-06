@@ -1,6 +1,6 @@
 package com.hust.datn.controller;
 
-import com.hust.datn.response.MessageResponse;
+import com.hust.datn.dto.response.MessageResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

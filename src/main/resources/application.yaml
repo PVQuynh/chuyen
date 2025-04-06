@@ -1,0 +1,17 @@
+# Server port
+server:
+  port: 8040
+
+spring:
+  application:
+    name: do_an
+  datasource:
+    url: jdbc:mysql://202.191.56.11:3307/chuyen
+    username: chuyen
+    password: chuyen
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
