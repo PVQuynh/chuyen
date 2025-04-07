@@ -17,8 +17,7 @@ public class IndexController {
         messageResponse.setCode(HttpStatus.OK.value());
         messageResponse.setMessage(HttpStatus.OK.getReasonPhrase());
         messageResponse.setData("Đồ án của Chuyên");
-
-        return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(messageResponse);
     }
 }
 

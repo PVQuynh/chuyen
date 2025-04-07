@@ -3,6 +3,7 @@ package com.hust.datn.service.impl;
 import com.hust.datn.dto.request.QuestionReq;
 import com.hust.datn.dto.response.AnswerRes;
 import com.hust.datn.dto.response.QuestionRes;
+import com.hust.datn.dto.response.QuestionUpdateRes;
 import com.hust.datn.entity.Answer;
 import com.hust.datn.entity.Question;
 import com.hust.datn.mapper.AnswerMapper;
@@ -73,5 +74,36 @@ public class QuestionServiceImpl implements QuestionService {
         return new PageImpl<>(questionReses, pageable, questions.size());
     }
 
-    // TODO: upate/delete
+    @Transactional
+    @Override
+    public void delete(Integer id) {
+        List<Answer> answers = answerRepository.findAllByQuestionId(id);
+        questionRepository.deleteById(id);
+        answerRepository.deleteAll(answers);
+    }
+
+    @Override
+    public void update(QuestionUpdateRes questionUpdateRes) {
+        Question question = questionRepository.findById(questionUpdateRes.getId()).orElse(null);
+
+        if (question != null) {
+            if (questionUpdateRes.getType() != null) {
+                question.setTitle(questionUpdateRes.getType());
+            }
+            if (questionUpdateRes.getContent() != null) {
+                question.setContent(questionUpdateRes.getContent());
+            }
+            if (questionUpdateRes.getImageUrl() != null) {
+                question.setImageUrl(questionUpdateRes.getImageUrl());
+            }
+            if (questionUpdateRes.getType() != null) {
+                question.setType(questionUpdateRes.getType());
+            }
+            if (questionUpdateRes.getAge() != null) {
+                question.setAge(questionUpdateRes.getAge());
+            }
+            questionRepository.save(question);
+        }
+    }
+
 }
