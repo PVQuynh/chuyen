@@ -1,6 +1,5 @@
 package com.hust.datn.dto.request;
 
-import com.hust.datn.entity.Answer;
 import lombok.Data;
 
 import java.util.List;

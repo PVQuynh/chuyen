@@ -56,6 +56,21 @@ public class QuestionController {
         }
     }
 
+    @GetMapping("/get-random")
+    public ResponseEntity<MessageResponse> getRandomQuestions() {
+        MessageResponse messageResponse = new MessageResponse();
+        try {
+            messageResponse.setCode(HttpStatus.OK.value());
+            messageResponse.setMessage(HttpStatus.OK.getReasonPhrase());
+            messageResponse.setData(questionService.getRandomQuestions());
+            return ResponseEntity.ok().body(messageResponse);
+        } catch (Exception e) {
+            messageResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            messageResponse.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageResponse);
+        }
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<MessageResponse> deleteQuestion(@PathVariable Integer id) {
         MessageResponse messageResponse = new MessageResponse();

@@ -74,6 +74,28 @@ public class QuestionServiceImpl implements QuestionService {
         return new PageImpl<>(questionReses, pageable, questions.size());
     }
 
+    @Override
+    public List<QuestionRes> getRandomQuestions() {
+        // Lấy ra questions
+        List<Question> questions = questionRepository.findRandomQuestions();
+        List<QuestionRes> questionReses = questions
+                .stream()
+                .map(QuestionMapper::toDto)
+                .toList();
+
+        // Lấy ra answers của question
+        for (QuestionRes questionRes : questionReses) {
+            List<Answer> answers = answerRepository.findAllByQuestionId(questionRes.getId());
+            List<AnswerRes> answerReses = answers
+                    .stream()
+                    .map(AnswerMapper::toDto)
+                    .toList();
+            questionRes.setAnswers(answerReses);
+        }
+
+        return questionReses;
+    }
+
     @Transactional
     @Override
     public void delete(Integer id) {
