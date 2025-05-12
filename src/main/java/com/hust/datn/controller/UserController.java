@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping("{deviceId}")
-    public ResponseEntity<MessageResponse> addUser(@PathVariable String deviceId) {
+    public ResponseEntity<MessageResponse> getUser(@PathVariable String deviceId) {
         MessageResponse messageResponse = new MessageResponse();
         try {
             messageResponse.setCode(HttpStatus.OK.value());
@@ -60,5 +60,37 @@ public class UserController {
         }
     }
 
+    @GetMapping("get-all")
+    public ResponseEntity<MessageResponse> getUsers() {
+        MessageResponse messageResponse = new MessageResponse();
+        try {
+            messageResponse.setCode(HttpStatus.OK.value());
+            messageResponse.setMessage(HttpStatus.OK.getReasonPhrase());
+            messageResponse.setData(userService.getAll());
+            return ResponseEntity.ok().body(messageResponse);
+        } catch (Exception e) {
+            messageResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            messageResponse.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageResponse);
+        }
+    }
+
+    @PutMapping("{deviceId}")
+    public ResponseEntity<MessageResponse> updateUser(
+            @PathVariable String deviceId,
+            @RequestBody UserReq userReq) {
+        MessageResponse messageResponse = new MessageResponse();
+        try {
+            messageResponse.setCode(HttpStatus.OK.value());
+            messageResponse.setMessage(HttpStatus.OK.getReasonPhrase());
+            userReq.setDeviceId(deviceId);
+            userService.update(userReq);
+            return ResponseEntity.ok().body(messageResponse);
+        } catch (Exception e) {
+            messageResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            messageResponse.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageResponse);
+        }
+    }
 
 }
